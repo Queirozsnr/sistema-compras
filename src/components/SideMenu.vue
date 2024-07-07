@@ -52,23 +52,5 @@
   .menu-item:hover {
     color: #ffc107;
   }
-  
-  .menu-item::after {
-    content: attr(title);
-    position: absolute;
-    left: 80px;
-    background: #343a40;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    opacity: 0;
-    white-space: nowrap;
-    transition: opacity 0.3s;
-    z-index: 1000;
-  }
-  
-  .menu-item:hover::after {
-    opacity: 1;
-  }
   </style>
   
