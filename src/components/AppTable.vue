@@ -23,16 +23,40 @@
           <td>{{ item.descricao }}</td>
           <td>{{ item.quantidade }}</td>
           <td>
-            <input class="border-0" type="number" v-model="editableData[index].fornecedor1" @blur="updateFornecedor(index, 'fornecedor1')" />
+            <input
+              class="border-0"
+              type="number"
+              v-model="item.fornecedor1"
+              @blur="handleBlur(index, 'fornecedor1', item.fornecedor1)"
+              :readonly="readonly"
+            />
           </td>
           <td>
-            <input class="border-0" type="number" v-model="editableData[index].fornecedor2" @blur="updateFornecedor(index, 'fornecedor2')" />
+            <input
+              class="border-0"
+              type="number"
+              v-model="item.fornecedor2"
+              @blur="handleBlur(index, 'fornecedor2', item.fornecedor2)"
+              :readonly="readonly"
+            />
           </td>
           <td>
-            <input class="border-0" type="number" v-model="editableData[index].fornecedor3" @blur="updateFornecedor(index, 'fornecedor3')" />
+            <input
+              class="border-0"
+              type="number"
+              v-model="item.fornecedor3"
+              @blur="handleBlur(index, 'fornecedor3', item.fornecedor3)"
+              :readonly="readonly"
+            />
           </td>
           <td>
-            <input class="border-0" type="number" v-model="editableData[index].fornecedor4" @blur="updateFornecedor(index, 'fornecedor4')" />
+            <input
+              class="border-0"
+              type="number"
+              v-model="item.fornecedor4"
+              @blur="handleBlur(index, 'fornecedor4', item.fornecedor4)"
+              :readonly="readonly"
+            />
           </td>
         </tr>
       </tbody>
@@ -41,8 +65,6 @@
 </template>
 
 <script>
-import productsService from '../services/products';
-
 export default {
   name: 'AppTable',
   props: {
@@ -53,32 +75,18 @@ export default {
     loading: {
       type: Boolean,
       default: false
-    }
-  },
-  data() {
-    return {
-      editableData: JSON.parse(JSON.stringify(this.data))
-    };
-  },
-  watch: {
-    data: {
-      handler(newData) {
-        this.editableData = JSON.parse(JSON.stringify(newData));
-      },
-      deep: true
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
-    updateFornecedor(index) {
-      const updatedItem = this.editableData[index];
-      productsService.updateData(updatedItem)
-        .then(() => {
-          console.log('Dados atualizados com sucesso!');
-        })
-        .catch(error => {
-          console.error('Erro ao atualizar os dados:', error);
-        });
-    },
+    handleBlur(index, fornecedor, value) {
+      if (!this.readonly) {
+        this.$emit('update-fornecedor', index, fornecedor, value);
+      }
+    }
   }
 };
 </script>

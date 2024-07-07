@@ -21,3 +21,10 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Backend
+*.vs
+backend/backend/bin/*
+backend/backend/obj/*
+backend/backend.*/bin/*
+backend/backend.*/obj/*

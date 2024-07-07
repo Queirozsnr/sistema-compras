@@ -18,21 +18,28 @@
     </div>
 
     <hr class="border-dark my-4">
-    
     <AnalysisTable />
-    
+    <hr class="border-dark my-4">
+    <MultiFileUpload />
+    <hr class="border-dark my-4">
+    <SelectedAnalysisTable />
+
   </div>
 </template>
 
 <script>
 import AnalysisTable from '../components/AnalysisTable.vue';
 import CardInput from '../components/CardInput.vue';
+import MultiFileUpload from '../components/MultiFileUpload.vue'
+import SelectedAnalysisTable from '../components/SelectedAnalysisTable.vue'
 
 export default {
   name: 'AnalysisView',
   components: {
     AnalysisTable,
     CardInput,
+    MultiFileUpload,
+    SelectedAnalysisTable,
   },
 };
 </script>
