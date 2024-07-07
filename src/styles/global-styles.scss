@@ -1,0 +1,16 @@
+:root {
+    --primary-color: #007bff; // Azul
+    --secondary-color: #606062; // Cinza
+    --gray-color: #f8f9fa; // Cinza claro
+    --white-color: #FFFFFF;
+
+    // Cores de destaque
+    --success-color: #28a745; // Verde
+    --info-color: #17a2b8; // Azul claro
+    --warning-color: #ffc107; // Amarelo
+    --danger-color: #dc3545; // Vermelho
+}
+
+body {
+    font-family: 'Helvetica', 'Roboto', sans-serif !important;
+}
