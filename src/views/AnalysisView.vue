@@ -14,7 +14,6 @@
           <CardInput label="Tipo:" value="Material" />
         </div>
       </div>
-      
     </div>
 
     <hr class="border-dark my-4">
@@ -33,18 +32,34 @@
     <AppModal v-if="showModalFinalizar" modal-title="Enviar Cotação">
       <div class="d-flex justify-content-center">
         <p class="custom-title fw-bold">Deseja enviar agora como pedido para o Protheus?</p>
-      </div>      
+      </div>
       <div class="d-flex justify-content-center my-3">
         <AppButton color="cancel" @click="closeModal('finalizar')">Retornar a edição</AppButton>
         <AppButton color="secondary" @click="openModal('reprovar')">Reprovar</AppButton>
         <AppButton color="primary" @click="openModal('finalizar')">Aprovar</AppButton>
       </div>
     </AppModal>
-    
+
     <AppModal v-if="showModalReprovar" modal-title="Reprovar">
-      <div class="d-flex justify-content-center">
-        <p class="custom-title fw-bold">Deseja enviar agora como pedido para o Protheus?</p>
-      </div>      
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+            <CardInput label="Código" value="001" />
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+            <CardInput label="Descrição" value="Lista de Expediente" />
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-lg-5">
+            <CardInput label="Tipo:" value="Material" />
+          </div>
+        </div>
+        <div class="row">
+          <p class="custom-title fw-bold mt-1">Justificativa</p>
+          <div class="col">
+            <CardInput label="Descreva a Justificativa" value="" />
+          </div>
+        </div>
+      </div>
       <div class="d-flex justify-content-end my-3">
         <AppButton color="secondary" @click="closeModal('reprovar')">Cancelar</AppButton>
         <AppButton color="primary" @click="closeModal">Confirmar</AppButton>

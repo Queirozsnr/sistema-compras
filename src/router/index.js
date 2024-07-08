@@ -10,17 +10,22 @@ const routes = [
   {
     path: '/compras',
     name: 'Compras',
-    component: AnalysisView, // Substitua com o componente correto para esta rota
+    component: AnalysisView,
   },
   {
     path: '/relatorios',
     name: 'Relatórios',
-    component: AnalysisView, // Substitua com o componente correto para esta rota
+    component: AnalysisView,
+  },
+  {
+    path: '/validar-produto',
+    name: 'Validar Produto',
+    component: AnalysisView,
   },
   {
     path: '/configuracoes',
     name: 'Configurações',
-    component: AnalysisView, // Substitua com o componente correto para esta rota
+    component: AnalysisView,
   },
 ];
 

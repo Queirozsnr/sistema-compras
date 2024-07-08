@@ -28,7 +28,7 @@
     height: 5rem;
   }
   .custom-modal-body {
-    height: 10rem;
+    min-height: 10rem;
   }
   </style>
   
