@@ -21,23 +21,24 @@
       <h5 class="fw-bold text-secondary fw-bold">Editar Valores</h5>
       <p class="text-secondary mx-3">Informe os valores repassados pelos fornecedores</p>
     </div>
-    <AnalysisTable />
+    <AnalysisTable @fornecedores-selecionados="handleFornecedoresSelecionados" />
     <hr class="border-dark my-4">
     <div>
       <h5 class="fw-bold text-secondary fw-bold">Anexos</h5>
-      <p class="text-secondary mx-3">Insira as cotações envidas</p>
+      <p class="text-secondary mx-3">Insira as cotações enviadas</p>
     </div>
     <MultiFileUpload />
+    <AppToast v-if="showToast" :message="toastMessage" />
     <hr class="border-dark my-4">
     <div>
       <h5 class="fw-bold text-secondary fw-bold">Fornecedores selecionados</h5>
       <p class="text-secondary mx-3">Vencedores escolhidos por item e análise da última compra</p>
     </div>
-    <SelectedAnalysisTable />
+    <SelectedAnalysisTable :dataSelected="fornecedoresSelecionados" />
     <hr class="border-dark my-4">
     <div class="d-flex justify-content-end mb-3">
-      <AppButton color="cancel" @click="addFiles">Cancelar</AppButton>
-      <AppButton color="secondary" @click="addFiles">Salvar Rascunho</AppButton>
+      <AppButton color="cancel" @click="closeModal">Cancelar</AppButton>
+      <AppButton color="secondary" @click="closeModal">Salvar Rascunho</AppButton>
       <AppButton color="primary" @click="openModal('finalizar')">Finalizar</AppButton>
     </div>
 
@@ -48,7 +49,7 @@
       <div class="d-flex justify-content-center my-3">
         <AppButton color="cancel" @click="closeModal('finalizar')">Retornar a edição</AppButton>
         <AppButton color="secondary" @click="openModal('reprovar')">Reprovar</AppButton>
-        <AppButton color="primary" @click="closeModal('finalizar')">Aprovar</AppButton>
+        <AppButton color="primary" @click="approve('Cotação aprovada com sucesso!')">Aprovar</AppButton>
       </div>
     </AppModal>
 
@@ -75,7 +76,7 @@
       </div>
       <div class="d-flex justify-content-end my-3">
         <AppButton color="secondary" @click="closeModal('reprovar')">Cancelar</AppButton>
-        <AppButton color="primary" @click="closeModal">Confirmar</AppButton>
+        <AppButton color="primary" @click="approve('Reprovado com sucesso!')">Confirmar</AppButton>
       </div>
     </AppModal>
 
@@ -83,35 +84,37 @@
 </template>
 
 <script>
-import AnalysisTable from '../components/AnalysisTable.vue';
+import AnalysisTable from '../components/AnalysisTable.vue'; // Importa o componente AnalysisTable
 import MultiFileUpload from '../components/MultiFileUpload.vue';
 import SelectedAnalysisTable from '../components/SelectedAnalysisTable.vue';
 import AppButton from '../components/AppButton.vue';
 import AppModal from '../components/AppModal.vue';
 import CardInput from '../components/CardInput.vue';
 import AppInput from '../components/AppInput.vue';
+import AppToast from '../components/AppToast.vue';
 
 export default {
   name: 'AnalysisView',
   components: {
-    AnalysisTable,
+    AnalysisTable, // Adiciona AnalysisTable aos componentes disponíveis
     CardInput,
     MultiFileUpload,
     SelectedAnalysisTable,
     AppButton,
     AppModal,
     AppInput,
+    AppToast,
   },
   data() {
     return {
       showModalFinalizar: false,
       showModalReprovar: false,
+      fornecedoresSelecionados: [],
+      showToast: false,
+      toastMessage: '',
     };
   },
   methods: {
-    addFiles() {
-      console.log('Adicionando arquivos...');
-    },
     openModal(modal) {
       this.setModalVisibility(modal, true);
     },
@@ -127,7 +130,19 @@ export default {
         this.showModalFinalizar = isVisible;
         this.showModalReprovar = isVisible;
       }
-    }
+    },
+    handleFornecedoresSelecionados(selectedFornecedores) {
+      this.fornecedoresSelecionados = selectedFornecedores;
+      console.log('Fornecedores selecionados em AnalysisView:', this.fornecedoresSelecionados);
+    },
+    approve(message) {
+      this.showToast = true;
+      this.toastMessage = message;
+      setTimeout(() => {
+        this.showToast = false;
+      }, 3000);
+      this.closeModal();
+    },
   },
 };
 </script>

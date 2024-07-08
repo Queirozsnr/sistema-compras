@@ -23,44 +23,56 @@
           <td>{{ item.descricao }}</td>
           <td>{{ item.quantidade }}</td>
           <td>
-            <input
-              class="border-0"
-              type="number"
-              min="0"
-              v-model="item.fornecedor1"
-              @blur="handleBlur(index, 'fornecedor1', item.fornecedor1)"
-              :readonly="readonly"
-            />
+            <div class="input-group row">
+              <input
+                class="border-0 col-10"
+                type="number"
+                min="0"
+                v-model="item.fornecedor1"
+                @blur="handleBlur(index, 'fornecedor1', item.fornecedor1)"
+                :readonly="readonly"
+              />
+              <i v-if="!readonly" class="bi bi-check2-circle col-2" role="button" @click="selectFornecedor(index, 'fornecedor1')"></i>
+            </div>
           </td>
           <td>
-            <input
-              class="border-0"
-              type="number"
-              min="0"
-              v-model="item.fornecedor2"
-              @blur="handleBlur(index, 'fornecedor2', item.fornecedor2)"
-              :readonly="readonly"
-            />
+            <div class="input-group">
+              <input
+                class="border-0 col-10"
+                type="number"
+                min="0"
+                v-model="item.fornecedor2"
+                @blur="handleBlur(index, 'fornecedor2', item.fornecedor2)"
+                :readonly="readonly"
+              />
+              <i v-if="!readonly" class="bi bi-check2-circle col-2" role="button" @click="selectFornecedor(index, 'fornecedor2')"></i>
+            </div>
           </td>
           <td>
-            <input
-              class="border-0"
-              type="number"
-              min="0"
-              v-model="item.fornecedor3"
-              @blur="handleBlur(index, 'fornecedor3', item.fornecedor3)"
-              :readonly="readonly"
-            />
+            <div class="input-group">
+              <input
+                class="border-0 col-10"
+                type="number"
+                min="0"
+                v-model="item.fornecedor3"
+                @blur="handleBlur(index, 'fornecedor3', item.fornecedor3)"
+                :readonly="readonly"
+              />
+              <i v-if="!readonly" class="bi bi-check2-circle col-2" role="button" @click="selectFornecedor(index, 'fornecedor3')"></i>
+            </div>
           </td>
           <td>
-            <input
-              class="border-0"
-              type="number"
-              min="0"
-              v-model="item.fornecedor4"
-              @blur="handleBlur(index, 'fornecedor4', item.fornecedor4)"
-              :readonly="readonly"
-            />
+            <div class="input-group">
+              <input
+                class="border-0 col-10"
+                type="number"
+                min="0"
+                v-model="item.fornecedor4"
+                @blur="handleBlur(index, 'fornecedor4', item.fornecedor4)"
+                :readonly="readonly"
+              />
+              <i v-if="!readonly" class="bi bi-check2-circle col-2" role="button" @click="selectFornecedor(index, 'fornecedor4')"></i>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -85,15 +97,40 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      selectedFornecedores: [] // Array para armazenar as seleções de fornecedores
+    };
+  },
   methods: {
     handleBlur(index, fornecedor, value) {
       if (!this.readonly) {
         this.$emit('update-fornecedor', index, fornecedor, value);
       }
+    },
+    selectFornecedor(index, fornecedor) {
+      // Verifica se já existe uma seleção para o produto
+      const existingSelection = this.selectedFornecedores.find(sel => sel.index === index);
+      
+      if (existingSelection) {
+        // Atualiza apenas o fornecedor selecionado
+        existingSelection.fornecedor = fornecedor;
+      } else {
+        // Cria uma nova seleção para o produto
+        const newSelection = {
+          index,
+          fornecedor
+        };
+        this.selectedFornecedores.push(newSelection);
+      }
+      
+      // Emitir evento para o componente pai com os dados atualizados
+      this.$emit('fornecedores-selecionados', this.selectedFornecedores);
     }
   }
 };
 </script>
+
 
 <style scoped>
 .table thead th {
@@ -127,9 +164,18 @@ export default {
   height: 3rem;
 }
 
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
 input {
-  width: 100%;
+  flex: 1;
   border: 1px solid #ccc;
   padding: 5px;
+}
+
+.btn {
+  margin-left: 5px; /* Ajuste o espaçamento conforme necessário */
 }
 </style>

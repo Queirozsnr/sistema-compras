@@ -21,20 +21,24 @@
         </ul>
       </div>
     </div>
+    <AppToast v-if="showToast" :message="'Arquivos enviados com sucesso!'" />
   </div>
 </template>
 
 <script>
-import AppButton from '../components/AppButton.vue'
+import AppButton from '../components/AppButton.vue';
+import AppToast from '../components/AppToast.vue';
 
 export default {
   name: 'MultiFileUpload',
   components: {
     AppButton,
+    AppToast
   },
   data() {
     return {
-      files: []
+      files: [],
+      showToast: false,
     };
   },
   methods: {
@@ -45,7 +49,10 @@ export default {
       this.$refs.fileInput.click();
     },
     uploadFiles() {
-      alert(`Fazendo upload de ${this.files.length} arquivo(s).`);
+      this.showToast = true;
+      setTimeout(() => {
+        this.showToast = false;
+      }, 3000);
     },
     cancelUpload() {
       this.files = [];

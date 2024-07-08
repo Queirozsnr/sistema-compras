@@ -1,50 +1,51 @@
 <template>
-    <div>
-      <AppTable
-        :data="[]"
-        :loading="loading"
-        :readonly="true"
-      />
-    </div>
-  </template>
-  
-  <script>
-  import AppTable from './AppTable.vue';
-  import productsService from '../services/products';
-  
-  export default {
-    name: 'SelectedAnalysisTable',
-    components: {
-      AppTable,
+  <div>
+    <AppTable :data="dataSelected" :loading="loading" :readonly="readonly" />
+  </div>
+</template>
+
+<script>
+import AppTable from './AppTable.vue';
+import productsService from '../services/products';
+
+export default {
+  name: 'SelectedAnalysisTable',
+  props: {
+    dataSelected: {
+      type: Array,
+      required: true,
     },
-    data() {
-      return {
-        data: [],
-        editableData: [],
-        filteredData: [],
-        loading: true,
-        readonly: false,
-      };
+  },
+  components: {
+    AppTable,
+  },
+  data() {
+    return {
+      data: [],
+      editableData: [],
+      filteredData: [],
+      loading: true,
+      readonly: true,
+    };
+  },
+  created() {
+    productsService.getData().then(data => {
+      this.data = data;
+      this.editableData = JSON.parse(JSON.stringify(data));
+      this.loading = false;
+    });
+  },
+  methods: {
+    updateFornecedor(index, fornecedor, value) {
+      this.editableData[index][fornecedor] = value;
+      productsService.updateData(this.editableData[index])
+        .then(() => {
+          console.log('Dados atualizados com sucesso!');
+        })
+        .catch(error => {
+          console.error('Erro ao atualizar os dados:', error);
+        });
     },
-    created() {
-      productsService.getData().then(data => {
-        this.data = data;
-        this.editableData = JSON.parse(JSON.stringify(data));
-        this.loading = false;
-      });
-    },
-    methods: {
-      updateFornecedor(index, fornecedor, value) {
-        this.editableData[index][fornecedor] = value;
-        productsService.updateData(this.editableData[index])
-          .then(() => {
-            console.log('Dados atualizados com sucesso!');
-          })
-          .catch(error => {
-            console.error('Erro ao atualizar os dados:', error);
-          });
-      },
-    }
-  };
-  </script>
-  
+  }
+};
+</script>
