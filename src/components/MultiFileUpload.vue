@@ -10,10 +10,13 @@
       <div v-if="files.length > 0">
         <h3>Arquivos Selecionados</h3>
         <ul class="list-group">
-          <li v-for="(file, index) in files" :key="index"
-            class="border-0 list-group-item d-flex justify-content-between align-items-center">
-            {{ file.name }}
-            <button class="btn btn-danger btn-sm" @click="removeFile(index)">X</button>
+          <li v-for="(file, index) in files" :key="index" class="list-group-item border-0 d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <img v-if="isImage(file)" :src="previewImage(file)" class="file-preview me-3" alt="Preview">
+              <span class="file-name flex-grow-1">{{ file.name }}</span>
+              <span class="file-size">{{ formatFileSize(file.size) }}</span>
+            </div>
+            <img src="cancel.png" role="button" @click="removeFile(index)">
           </li>
         </ul>
       </div>
@@ -27,8 +30,8 @@ import AppButton from '../components/AppButton.vue'
 export default {
   name: 'MultiFileUpload',
   components: {
-      AppButton,
-    },
+    AppButton,
+  },
   data() {
     return {
       files: []
@@ -50,27 +53,50 @@ export default {
     },
     removeFile(index) {
       this.files.splice(index, 1);
+    },
+    isImage(file) {
+      return file.type.startsWith('image/');
+    },
+    previewImage(file) {
+      return URL.createObjectURL(file);
+    },
+    formatFileSize(size) {
+      const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+      let unit = 0;
+      while (size >= 1024 && unit < units.length - 1) {
+        size /= 1024;
+        unit++;
+      }
+      return `${size.toFixed(1)} ${units[unit]}`;
     }
   }
 };
 </script>
 
 <style scoped>
-.d-flex {
-  display: flex;
-}
-
-.justify-content-between {
-  justify-content: space-between;
-}
-
 .custom-width {
-  width: 80%;
+  width: 100%;
+  max-width: 80%;
+}
+
+.file-preview {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.file-name {
+  margin-right: 10px;
+}
+
+.file-size {
+  color: gray;
+  font-size: 0.9em;
 }
 
 @media (max-width: 992px) {
   .custom-width {
-    width: 100%;
+    max-width: 100%;
   }
 }
 </style>
