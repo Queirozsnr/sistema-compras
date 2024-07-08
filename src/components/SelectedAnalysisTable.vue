@@ -35,17 +35,5 @@ export default {
       this.loading = false;
     });
   },
-  methods: {
-    updateFornecedor(index, fornecedor, value) {
-      this.editableData[index][fornecedor] = value;
-      productsService.updateData(this.editableData[index])
-        .then(() => {
-          console.log('Dados atualizados com sucesso!');
-        })
-        .catch(error => {
-          console.error('Erro ao atualizar os dados:', error);
-        });
-    },
-  }
 };
 </script>

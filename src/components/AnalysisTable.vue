@@ -1,12 +1,7 @@
 <template>
   <div>
-    <AppTable
-      :data="editableData"
-      :loading="loading"
-      :readonly="readonly"
-      @update-fornecedor="updateFornecedor"
-      @fornecedores-selecionados="handleFornecedoresSelecionados"
-    />
+    <AppTable :data="editableData" :loading="loading" :readonly="readonly" @update-fornecedor="updateFornecedor"
+      @fornecedores-selecionados="handleFornecedoresSelecionados" />
   </div>
 </template>
 
@@ -37,36 +32,46 @@ export default {
   },
   methods: {
     updateFornecedor(index, fornecedor, value) {
-      this.editableData[index][fornecedor] = value;
-      productsService.updateData(this.editableData[index])
-        .then(() => {})
-        .catch(error => {
-          console.error('Erro ao atualizar os dados:', error);
-        });
-    },
-    handleFornecedoresSelecionados(selectedFornecedores) {
-  this.selectedFornecedores = selectedFornecedores.map(sel => {
-    const itemIndex = sel.index;
-    const fornecedorKey = sel.fornecedor;
-    if (itemIndex >= 0 && itemIndex < this.data.length) {
-      const item = { ...this.data[itemIndex] };
+  // Atualiza o valor no editableData imediatamente
+  this.editableData[index][fornecedor] = value;
 
-      if (item && fornecedorKey in item) {
-        item.selecionado = item[fornecedorKey];
-        return item;
-      } else {
-        console.warn(`Item não encontrado para o índice ${itemIndex} ou fornecedor ${fornecedorKey} não existe.`);
-        return null;
-      }
-    } else {
-      console.warn(`Índice ${itemIndex} está fora do intervalo.`);
-      return null;
-    }
-  }).filter(item => item !== null);
+  // Atualiza o valor no data original para refletir as mudanças
+  this.data[index][fornecedor] = value;
 
-  this.$emit('fornecedores-selecionados', this.selectedFornecedores);
+  // Chama o serviço para atualizar os dados no backend
+  productsService.updateData(this.editableData[index])
+    .then(() => {
+      // Emite evento com os novos dados
+      this.$emit('update-fornecedor', index, fornecedor, value);
+    })
+    .catch(error => {
+      console.error('Erro ao atualizar os dados:', error);
+      // Reverte para o valor anterior se houver um erro
+      this.editableData[index][fornecedor] = this.data[index][fornecedor];
+    });
 },
 
+    handleFornecedoresSelecionados(selectedFornecedores) {
+      this.selectedFornecedores = selectedFornecedores.map(sel => {
+        const itemIndex = sel.index;
+        const fornecedorKey = sel.fornecedor;
+        if (itemIndex >= 0 && itemIndex < this.data.length) {
+          const item = { ...this.data[itemIndex] };
+
+          if (item && fornecedorKey in item) {
+            item.selecionado = item[fornecedorKey];
+            return item;
+          } else {
+            console.warn(`Item não encontrado para o índice ${itemIndex} ou fornecedor ${fornecedorKey} não existe.`);
+            return null;
+          }
+        } else {
+          console.warn(`Índice ${itemIndex} está fora do intervalo.`);
+          return null;
+        }
+      }).filter(item => item !== null);
+      this.$emit('fornecedores-selecionados', this.selectedFornecedores);
+    },
   },
 };
 </script>

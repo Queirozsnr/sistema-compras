@@ -26,10 +26,10 @@
             <div class="input-group row">
               <input
                 class="border-0 col-10"
-                type="number"
-                min="0"
-                v-model="item.fornecedor1"
-                @blur="handleBlur(index, 'fornecedor1', item.fornecedor1)"
+                type="text"
+                :value="formatCurrency(item.fornecedor1)"
+                @blur="updateFornecedor(index, 'fornecedor1', $event.target.value)"
+                @focus="unformatCurrency(index, 'fornecedor1')"
                 :readonly="readonly"
               />
               <i v-if="!readonly" class="bi bi-check2-circle col-2" role="button" @click="selectFornecedor(index, 'fornecedor1')"></i>
@@ -39,10 +39,10 @@
             <div class="input-group">
               <input
                 class="border-0 col-10"
-                type="number"
-                min="0"
-                v-model="item.fornecedor2"
-                @blur="handleBlur(index, 'fornecedor2', item.fornecedor2)"
+                type="text"
+                :value="formatCurrency(item.fornecedor2)"
+                @blur="updateFornecedor(index, 'fornecedor2', $event.target.value)"
+                @focus="unformatCurrency(index, 'fornecedor2')"
                 :readonly="readonly"
               />
               <i v-if="!readonly" class="bi bi-check2-circle col-2" role="button" @click="selectFornecedor(index, 'fornecedor2')"></i>
@@ -52,10 +52,10 @@
             <div class="input-group">
               <input
                 class="border-0 col-10"
-                type="number"
-                min="0"
-                v-model="item.fornecedor3"
-                @blur="handleBlur(index, 'fornecedor3', item.fornecedor3)"
+                type="text"
+                :value="formatCurrency(item.fornecedor3)"
+                @blur="updateFornecedor(index, 'fornecedor3', $event.target.value)"
+                @focus="unformatCurrency(index, 'fornecedor3')"
                 :readonly="readonly"
               />
               <i v-if="!readonly" class="bi bi-check2-circle col-2" role="button" @click="selectFornecedor(index, 'fornecedor3')"></i>
@@ -65,10 +65,10 @@
             <div class="input-group">
               <input
                 class="border-0 col-10"
-                type="number"
-                min="0"
-                v-model="item.fornecedor4"
-                @blur="handleBlur(index, 'fornecedor4', item.fornecedor4)"
+                type="text"
+                :value="formatCurrency(item.fornecedor4)"
+                @blur="updateFornecedor(index, 'fornecedor4', $event.target.value)"
+                @focus="unformatCurrency(index, 'fornecedor4')"
                 :readonly="readonly"
               />
               <i v-if="!readonly" class="bi bi-check2-circle col-2" role="button" @click="selectFornecedor(index, 'fornecedor4')"></i>
@@ -99,13 +99,14 @@ export default {
   },
   data() {
     return {
-      selectedFornecedores: []
+      selectedFornecedores: [],
     };
   },
   methods: {
-    handleBlur(index, fornecedor, value) {
+    updateFornecedor(index, fornecedor, value) {
       if (!this.readonly) {
-        this.$emit('update-fornecedor', index, fornecedor, value);
+        const numericValue = this.unformatCurrencyValue(value);
+        this.$emit('update-fornecedor', index, fornecedor, numericValue);
       }
     },
     selectFornecedor(index, fornecedor) {
@@ -122,6 +123,24 @@ export default {
       }
       
       this.$emit('fornecedores-selecionados', this.selectedFornecedores);
+    },
+    formatCurrency(value) {
+      if (value === null || value === undefined || value === '') return '';
+      if (typeof value === 'string' && value.includes('R$')) return value;
+      const numericValue = parseFloat(value);
+      if (isNaN(numericValue)) return '';
+      return numericValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    },
+    unformatCurrency(index, fornecedor) {
+      if (!this.readonly) {
+        const item = this.data[index];
+        item[fornecedor] = this.unformatCurrencyValue(item[fornecedor]);
+      }
+    },
+    unformatCurrencyValue(value) {
+      if (value === null || value === undefined || value === '') return null;
+      const numericValue = parseFloat(String(value).replace(/[^0-9,-]+/g, "").replace(',', '.'));
+      return isNaN(numericValue) ? null : numericValue;
     }
   }
 };
