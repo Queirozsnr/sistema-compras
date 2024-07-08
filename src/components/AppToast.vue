@@ -3,12 +3,13 @@
         <div class="toast show align-items-center custom-toast border-0" role="alert" aria-live="assertive"
             aria-atomic="true">
             <div class="d-flex">
-                <div class="toast-body fw-bold">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-check text-success me-2 fs-4"></i>
+                </div>
+                <div class="toast-body fw-bold text-nowrap">
                     {{ message }}
                 </div>
-                <i class="bi bi-x-lg text-success me-2 m-auto" @click="$emit('close')" role="button"></i>
-                <!-- <button type="button" class="btn-close btn-close-white text-primary me-2 m-auto" data-bs-dismiss="toast"
-                    aria-label="Close"></button> -->
+                <i class="bi bi-x-lg text-success ms-2 m-auto" @click="$emit('close')" role="button"></i> <!-- Botão de fechar -->
             </div>
         </div>
     </div>
@@ -34,9 +35,15 @@ export default {
 .custom-toast {
     background-color: #E8F7F0;
     color: var(--success-color);
+    min-width: 300px;
+    height: auto;
+    padding: 15px;
+    font-size: 1rem;
 }
 
-.custom-close {
-    color: #000000;
+@media (max-width: 576px) {
+    .custom-toast {
+        width: 100%;
+    }
 }
 </style>

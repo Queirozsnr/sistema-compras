@@ -99,7 +99,7 @@ export default {
   },
   data() {
     return {
-      selectedFornecedores: [] // Array para armazenar as seleções de fornecedores
+      selectedFornecedores: []
     };
   },
   methods: {
@@ -109,14 +109,11 @@ export default {
       }
     },
     selectFornecedor(index, fornecedor) {
-      // Verifica se já existe uma seleção para o produto
       const existingSelection = this.selectedFornecedores.find(sel => sel.index === index);
       
       if (existingSelection) {
-        // Atualiza apenas o fornecedor selecionado
         existingSelection.fornecedor = fornecedor;
       } else {
-        // Cria uma nova seleção para o produto
         const newSelection = {
           index,
           fornecedor
@@ -124,7 +121,6 @@ export default {
         this.selectedFornecedores.push(newSelection);
       }
       
-      // Emitir evento para o componente pai com os dados atualizados
       this.$emit('fornecedores-selecionados', this.selectedFornecedores);
     }
   }
@@ -176,6 +172,6 @@ input {
 }
 
 .btn {
-  margin-left: 5px; /* Ajuste o espaçamento conforme necessário */
+  margin-left: 5px;
 }
 </style>

@@ -25,7 +25,7 @@ export default {
       editableData: [],
       loading: true,
       readonly: false,
-      selectedFornecedores: [], // Inicializa o array para armazenar fornecedores selecionados
+      selectedFornecedores: [],
     };
   },
   created() {
@@ -48,26 +48,22 @@ export default {
   this.selectedFornecedores = selectedFornecedores.map(sel => {
     const itemIndex = sel.index;
     const fornecedorKey = sel.fornecedor;
-
-    // Verifica se o índice está dentro dos limites do array de dados
     if (itemIndex >= 0 && itemIndex < this.data.length) {
       const item = { ...this.data[itemIndex] };
 
-      // Verifica se a chave do fornecedor existe no item
       if (item && fornecedorKey in item) {
-        item.selecionado = item[fornecedorKey]; // Adiciona o campo selecionado com o valor do fornecedor
+        item.selecionado = item[fornecedorKey];
         return item;
       } else {
         console.warn(`Item não encontrado para o índice ${itemIndex} ou fornecedor ${fornecedorKey} não existe.`);
-        return null; // Retorna null se o item não for encontrado
+        return null;
       }
     } else {
       console.warn(`Índice ${itemIndex} está fora do intervalo.`);
-      return null; // Retorna null se o índice estiver fora do intervalo
+      return null;
     }
-  }).filter(item => item !== null); // Filtra itens nulos, se houver
+  }).filter(item => item !== null);
 
-  // Emitir o evento 'fornecedores-selecionados' para o componente pai (AnalysisView)
   this.$emit('fornecedores-selecionados', this.selectedFornecedores);
 },
 

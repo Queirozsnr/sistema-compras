@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import AnalysisTable from '../components/AnalysisTable.vue'; // Importa o componente AnalysisTable
+import AnalysisTable from '../components/AnalysisTable.vue';
 import MultiFileUpload from '../components/MultiFileUpload.vue';
 import SelectedAnalysisTable from '../components/SelectedAnalysisTable.vue';
 import AppButton from '../components/AppButton.vue';
@@ -96,7 +96,7 @@ import AppToast from '../components/AppToast.vue';
 export default {
   name: 'AnalysisView',
   components: {
-    AnalysisTable, // Adiciona AnalysisTable aos componentes disponíveis
+    AnalysisTable,
     CardInput,
     MultiFileUpload,
     SelectedAnalysisTable,
@@ -136,6 +136,7 @@ export default {
       console.log('Fornecedores selecionados em AnalysisView:', this.fornecedoresSelecionados);
     },
     approve(message) {
+      this.fornecedoresSelecionados = [];
       this.showToast = true;
       this.toastMessage = message;
       setTimeout(() => {
