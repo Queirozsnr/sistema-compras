@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <TopBar />
-    <div class="d-flex">
-      <SideMenu />
-      <div class="container mt-5">
+    <TopBar v-if="!$route.meta.hideTopBar" />
+    <div :class="getFlexClass">
+      <SideMenu v-if="!$route.meta.hideSideMenu" />
+      <div :class="getPageContainerClass">
         <router-view></router-view>
       </div>
     </div>
@@ -20,5 +20,18 @@ export default {
     TopBar,
     SideMenu,
   },
+  computed: {
+    getFlexClass() {
+      return {
+        'd-flex': !this.$route.meta.isLoginPage,
+      };
+    },
+    getPageContainerClass() {
+      return {
+        'container': !this.$route.meta.isLoginPage,
+        'mt-5': !this.$route.meta.isLoginPage,
+      };
+    }
+  }
 };
 </script>

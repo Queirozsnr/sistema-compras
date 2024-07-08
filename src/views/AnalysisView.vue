@@ -17,10 +17,22 @@
     </div>
 
     <hr class="border-dark my-4">
+    <div>
+      <h5 class="fw-bold text-secondary fw-bold">Editar Valores</h5>
+      <p class="text-secondary mx-3">Informe os valores repassados pelos fornecedores</p>
+    </div>
     <AnalysisTable />
     <hr class="border-dark my-4">
+    <div>
+      <h5 class="fw-bold text-secondary fw-bold">Anexos</h5>
+      <p class="text-secondary mx-3">Insira as cotações envidas</p>
+    </div>
     <MultiFileUpload />
     <hr class="border-dark my-4">
+    <div>
+      <h5 class="fw-bold text-secondary fw-bold">Fornecedores selecionados</h5>
+      <p class="text-secondary mx-3">Vencedores escolhidos por item e análise da última compra</p>
+    </div>
     <SelectedAnalysisTable />
     <hr class="border-dark my-4">
     <div class="d-flex justify-content-end mb-3">
@@ -36,7 +48,7 @@
       <div class="d-flex justify-content-center my-3">
         <AppButton color="cancel" @click="closeModal('finalizar')">Retornar a edição</AppButton>
         <AppButton color="secondary" @click="openModal('reprovar')">Reprovar</AppButton>
-        <AppButton color="primary" @click="openModal('finalizar')">Aprovar</AppButton>
+        <AppButton color="primary" @click="closeModal('finalizar')">Aprovar</AppButton>
       </div>
     </AppModal>
 
@@ -56,7 +68,8 @@
         <div class="row">
           <p class="custom-title fw-bold mt-1">Justificativa</p>
           <div class="col">
-            <CardInput label="Descreva a Justificativa" value="" />
+            <AppInput id="justificativa" label="justificativa" placeholder="Descreva a Justificativa"
+              v-model="justificativa" />
           </div>
         </div>
       </div>
@@ -75,7 +88,8 @@ import MultiFileUpload from '../components/MultiFileUpload.vue';
 import SelectedAnalysisTable from '../components/SelectedAnalysisTable.vue';
 import AppButton from '../components/AppButton.vue';
 import AppModal from '../components/AppModal.vue';
-import CardInput from '../components/CardInput.vue'
+import CardInput from '../components/CardInput.vue';
+import AppInput from '../components/AppInput.vue';
 
 export default {
   name: 'AnalysisView',
@@ -86,6 +100,7 @@ export default {
     SelectedAnalysisTable,
     AppButton,
     AppModal,
+    AppInput,
   },
   data() {
     return {
@@ -113,7 +128,7 @@ export default {
         this.showModalReprovar = isVisible;
       }
     }
-  }
+  },
 };
 </script>
 

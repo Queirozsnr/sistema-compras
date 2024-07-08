@@ -1,5 +1,5 @@
 <template>
-    <button class="mx-1" :class="buttonClass" @click="handleClick">
+    <button class="mx-1" :class="[buttonClass, additionalClasses]" @click="handleClick">
         <slot></slot>
     </button>
 </template>
@@ -16,6 +16,10 @@ export default {
         onClick: {
             type: Function,
             default: () => { }
+        },
+        additionalClasses: {
+            type: String,
+            default: ''
         }
     },
     computed: {

@@ -1,9 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AnalysisView from '../views/AnalysisView.vue';
+import LoginView from '../components/LoginView.vue';
 
 const routes = [
   {
     path: '/',
+    name: 'Login',
+    component: LoginView,
+    meta: {
+      hideTopBar: true,
+      hideSideMenu: true,
+      isLoginPage: true,
+    },
+  },
+  {
+    path: '/dashboard',
     name: 'Dashboard',
     component: AnalysisView,
   },
