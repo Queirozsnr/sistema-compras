@@ -33,7 +33,6 @@
   <style>
   .side-menu {
     width: 70px;
-    height: 100vh;
     background-color: #343a40;
     padding-top: 20px;
   }

@@ -26,6 +26,7 @@
             <input
               class="border-0"
               type="number"
+              min="0"
               v-model="item.fornecedor1"
               @blur="handleBlur(index, 'fornecedor1', item.fornecedor1)"
               :readonly="readonly"
@@ -35,6 +36,7 @@
             <input
               class="border-0"
               type="number"
+              min="0"
               v-model="item.fornecedor2"
               @blur="handleBlur(index, 'fornecedor2', item.fornecedor2)"
               :readonly="readonly"
@@ -44,6 +46,7 @@
             <input
               class="border-0"
               type="number"
+              min="0"
               v-model="item.fornecedor3"
               @blur="handleBlur(index, 'fornecedor3', item.fornecedor3)"
               :readonly="readonly"
@@ -53,6 +56,7 @@
             <input
               class="border-0"
               type="number"
+              min="0"
               v-model="item.fornecedor4"
               @blur="handleBlur(index, 'fornecedor4', item.fornecedor4)"
               :readonly="readonly"

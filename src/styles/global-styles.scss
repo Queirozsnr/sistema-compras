@@ -1,8 +1,9 @@
 :root {
-    --primary-color: #007bff; // Azul
-    --secondary-color: #606062; // Cinza
-    --gray-color: #f8f9fa; // Cinza claro
+    --primary-color: #189FE3; // Azul
+    --secondary-color: #707070; // Cinza
     --white-color: #FFFFFF;
+    --black-color: #000000;
+    --text-gray-color: #707070;
 
     // Cores de destaque
     --success-color: #28a745; // Verde
@@ -13,4 +14,8 @@
 
 body {
     font-family: 'Helvetica', 'Roboto', sans-serif !important;
+}
+
+.custom-title {
+    color: var(--text-gray-color);
 }

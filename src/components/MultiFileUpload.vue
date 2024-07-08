@@ -1,22 +1,17 @@
 <template>
   <div class="card custom-width">
     <div class="card-header d-flex">
-      <button class="btn btn-primary mx-3" @click="addFiles">Adicionar</button>
-      <button class="btn btn-success mx-3" @click="uploadFiles" :disabled="files.length === 0">Upload</button>
-      <button class="btn btn-danger mx-3" @click="cancelUpload">Cancelar</button>
+      <AppButton color="primary" @click="addFiles">Adicionar</AppButton>
+      <AppButton color="secondary" @click="uploadFiles" :disabled="files.length === 0">Upload</AppButton>
+      <AppButton color="cancel" @click="cancelUpload">Cancelar</AppButton>
     </div>
     <div class="card-body">
-      <input
-        type="file"
-        multiple
-        class="d-none"
-        @change="handleFileInput"
-        ref="fileInput"
-      />
+      <input type="file" multiple class="d-none" @change="handleFileInput" ref="fileInput" />
       <div v-if="files.length > 0">
         <h3>Arquivos Selecionados</h3>
         <ul class="list-group">
-          <li v-for="(file, index) in files" :key="index" class="list-group-item d-flex justify-content-between align-items-center">
+          <li v-for="(file, index) in files" :key="index"
+            class="border-0 list-group-item d-flex justify-content-between align-items-center">
             {{ file.name }}
             <button class="btn btn-danger btn-sm" @click="removeFile(index)">X</button>
           </li>
@@ -27,8 +22,13 @@
 </template>
 
 <script>
+import AppButton from '../components/AppButton.vue'
+
 export default {
   name: 'MultiFileUpload',
+  components: {
+      AppButton,
+    },
   data() {
     return {
       files: []
@@ -59,16 +59,18 @@ export default {
 .d-flex {
   display: flex;
 }
+
 .justify-content-between {
   justify-content: space-between;
 }
+
 .custom-width {
   width: 80%;
 }
+
 @media (max-width: 992px) {
   .custom-width {
     width: 100%;
   }
 }
 </style>
-
